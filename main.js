@@ -185,11 +185,16 @@ confirmBtn.addEventListener('click', () => {
 /* --------------------------
    Auth (mock)
    -------------------------- */
+// redirect to login / signup pages
 loginBtn.addEventListener('click', () => {
+    // if user signed in, logout
     if (getUser()) { logout(); showToast('Logged out', 'info'); return; }
-    promptLogin();
+    window.location.href = 'login.html';
 });
-signupBtn.addEventListener('click', promptLogin);
+signupBtn.addEventListener('click', () => {
+    window.location.href = 'signup.html';
+});
+
 joinBtn && joinBtn.addEventListener('click', promptLogin);
 
 function promptLogin() {
@@ -245,24 +250,24 @@ document.getElementById('viewEventsBtn').addEventListener('click', () => {
    -------------------------- */
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-  contactForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = contactForm.name.value.trim();
-    const email = contactForm.email.value.trim();
-    const message = contactForm.message.value.trim();
+    contactForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const name = contactForm.name.value.trim();
+        const email = contactForm.email.value.trim();
+        const message = contactForm.message.value.trim();
 
-    if (!name || !email || !message) {
-      showToast('Please fill in all fields.', 'error');
-      return;
-    }
+        if (!name || !email || !message) {
+            showToast('Please fill in all fields.', 'error');
+            return;
+        }
 
-    // Simulate sending (you can connect to Formspree or EmailJS here)
-    showToast('Sending message...', 'info');
-    setTimeout(() => {
-      showToast('Message sent successfully! I’ll get back to you soon.', 'success');
-      contactForm.reset();
-    }, 1200);
-  });
+        // Simulate sending (you can connect to Formspree or EmailJS here)
+        showToast('Sending message...', 'info');
+        setTimeout(() => {
+            showToast('Message sent successfully! I’ll get back to you soon.', 'success');
+            contactForm.reset();
+        }, 1200);
+    });
 }
 
 /* --------------------------
@@ -270,62 +275,62 @@ if (contactForm) {
    -------------------------- */
 // Contact form handler (safe, non-blocking)
 document.addEventListener('DOMContentLoaded', () => {
-  try {
-    const contactForm = document.getElementById('contactForm');
-    if (!contactForm) return; // nothing to do if form not present
+    try {
+        const contactForm = document.getElementById('contactForm');
+        if (!contactForm) return; // nothing to do if form not present
 
-    // safe toast function: prefer existing showToast, otherwise fallback
-    const toast = (typeof window.showToast === 'function')
-      ? window.showToast
-      : function(message = '', type = 'info') {
-          // simple fallback toast so nothing breaks
-          const t = document.createElement('div');
-          t.textContent = message;
-          Object.assign(t.style, {
-            position: 'fixed',
-            right: '18px',
-            top: '18px',
-            padding: '10px 14px',
-            borderRadius: '8px',
-            background: type === 'error' ? '#ff5666' : type === 'success' ? '#1fb57a' : '#11121a',
-            color: '#fff',
-            zIndex: 99999,
-            opacity: 0,
-            transition: 'all .28s'
-          });
-          document.body.appendChild(t);
-          requestAnimationFrame(()=>{ t.style.opacity = 1; t.style.transform = 'translateY(0)'; });
-          setTimeout(()=>{ t.style.opacity = 0; setTimeout(()=> t.remove(), 300); }, 3200);
-        };
+        // safe toast function: prefer existing showToast, otherwise fallback
+        const toast = (typeof window.showToast === 'function')
+            ? window.showToast
+            : function (message = '', type = 'info') {
+                // simple fallback toast so nothing breaks
+                const t = document.createElement('div');
+                t.textContent = message;
+                Object.assign(t.style, {
+                    position: 'fixed',
+                    right: '18px',
+                    top: '18px',
+                    padding: '10px 14px',
+                    borderRadius: '8px',
+                    background: type === 'error' ? '#ff5666' : type === 'success' ? '#1fb57a' : '#11121a',
+                    color: '#fff',
+                    zIndex: 99999,
+                    opacity: 0,
+                    transition: 'all .28s'
+                });
+                document.body.appendChild(t);
+                requestAnimationFrame(() => { t.style.opacity = 1; t.style.transform = 'translateY(0)'; });
+                setTimeout(() => { t.style.opacity = 0; setTimeout(() => t.remove(), 300); }, 3200);
+            };
 
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      try {
-        const name = (contactForm.name?.value || '').trim();
-        const email = (contactForm.email?.value || '').trim();
-        const message = (contactForm.message?.value || '').trim();
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            try {
+                const name = (contactForm.name?.value || '').trim();
+                const email = (contactForm.email?.value || '').trim();
+                const message = (contactForm.message?.value || '').trim();
 
-        if (!name || !email || !message) {
-          toast('Please fill in all fields.', 'error');
-          return;
-        }
+                if (!name || !email || !message) {
+                    toast('Please fill in all fields.', 'error');
+                    return;
+                }
 
-        // simulate sending
-        toast('Sending message...', 'info');
-        setTimeout(() => {
-          toast('Message sent successfully! I’ll get back to you soon.', 'success');
-          contactForm.reset();
-        }, 1200);
+                // simulate sending
+                toast('Sending message...', 'info');
+                setTimeout(() => {
+                    toast('Message sent successfully! I’ll get back to you soon.', 'success');
+                    contactForm.reset();
+                }, 1200);
 
-      } catch (innerErr) {
-        // catch internal errors so they don't bubble up and break other scripts
-        console.error('Contact form submit error:', innerErr);
-        toast('Unable to send message. Try again later.', 'error');
-      }
-    });
+            } catch (innerErr) {
+                // catch internal errors so they don't bubble up and break other scripts
+                console.error('Contact form submit error:', innerErr);
+                toast('Unable to send message. Try again later.', 'error');
+            }
+        });
 
-  } catch (err) {
-    // top-level protection: log, but don't throw
-    console.error('Contact form init failed:', err);
-  }
+    } catch (err) {
+        // top-level protection: log, but don't throw
+        console.error('Contact form init failed:', err);
+    }
 });

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sign Up — SocIethy</title>
+    <link rel="shortcut icon" href="assets/icon.png" type="image/x-icon">
+    <style>
+        :root {
+            --bg: #051023;
+            --card: #071428;
+            --accent: #7b61ff;
+            --muted: #9fb0c9;
+            --text: #eaf2ff
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            height: 100%;
+            font-family: Inter, system-ui, Arial;
+            background: linear-gradient(180deg, #021026 0%, #051428 100%);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        .card {
+            width: 100%;
+            max-width: 460px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+            border-radius: 14px;
+            padding: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6)
+        }
+
+        h2 {
+            margin: 0 0 8px
+        }
+
+        p.small {
+            color: var(--muted);
+            margin: 0 0 18px
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: transparent;
+            color: var(--text);
+            margin-bottom: 12px
+        }
+
+        .btn {
+            background: var(--accent);
+            border: 0;
+            padding: 10px 14px;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%
+        }
+
+        .link {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            color: var(--muted);
+            text-decoration: none
+        }
+
+        .help {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 10px
+        }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-bottom: 8px
+        }
+    </style>
+</head>
+
+<body>
+    <main class="card" role="main">
+        <h2>Create an account</h2>
+        <p class="small">Sign up to book events and manage your bookings. (Demo only — client-side auth)</p>
+
+        <div id="err" class="error" style="display:none"></div>
+
+        <form id="signupForm" novalidate>
+            <label for="name">Full name</label>
+            <input id="name" name="name" required placeholder="Your full name" />
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@example.com" />
+
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required placeholder="Create a password (min 6)" />
+
+            <label for="password2">Confirm Password</label>
+            <input id="password2" name="password2" type="password" required placeholder="Repeat password" />
+
+            <button type="submit" class="btn">Sign Up</button>
+        </form>
+
+        <a class="link" href="login.html">Already have an account? Log in</a>
+        <p class="help">Signed up users are stored in browser storage for demo only.</p>
+    </main>
+
+    <script>
+        // Helpers: SHA-256 password hashing using Web Crypto API (returns hex)
+        async function sha256Hex(str) {
+            const enc = new TextEncoder();
+            const data = enc.encode(str);
+            const hash = await crypto.subtle.digest('SHA-256', data);
+            // convert buffer to hex
+            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Storage helpers
+        const read = k => { try { return JSON.parse(localStorage.getItem(k) || '{}') } catch (e) { return {} } };
+        const write = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+        function showError(msg) {
+            const e = document.getElementById('err');
+            e.style.display = msg ? 'block' : 'none';
+            e.textContent = msg || '';
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', async (ev) => {
+            ev.preventDefault();
+            showError('');
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const pw = document.getElementById('password').value;
+            const pw2 = document.getElementById('password2').value;
+
+            if (!name || !email || !pw || !pw2) { showError('Please fill in all fields.'); return; }
+            if (pw.length < 6) { showError('Password must be at least 6 characters.'); return; }
+            if (pw !== pw2) { showError('Passwords do not match.'); return; }
+
+            try {
+                const users = read('users') || {};
+                if (users[email]) { showError('An account with that email already exists. Please login.'); return; }
+
+                const hashed = await sha256Hex(pw); // client-side hash
+                users[email] = { name, email, passwordHash: hashed, createdAt: new Date().toISOString() };
+                write('users', users);
+
+                // set session (logged in)
+                sessionStorage.setItem('user', JSON.stringify({ name, email, role: 'user' }));
+                // redirect to home
+                window.location.href = 'index.html';
+            } catch (err) {
+                console.error(err);
+                showError('Signup failed. Try again.');
+            }
+        });
+    </script>
+</body>
+
+</html>

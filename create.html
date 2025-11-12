@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Create Event — SPREE</title>
+    <link rel="stylesheet" href="create.css">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <script type="module" src="js-create.js"></script>
+    <main>
+        <h2 style="margin:0 0 12px;font-size:28px">Create Event</h2>
+
+        <div class="grid" role="region" aria-label="Create event form">
+
+            <!-- LEFT: Image + theme -->
+            <div class="card">
+                <div style="font-weight:700;margin-bottom:8px">Event Image</div>
+
+                <div class="image-uploader" id="imagePreviewWrap">
+                    <span id="imagePlaceholder" class="small muted" style="color:var(--muted)">No image selected</span>
+                    <img id="imagePreview" class="hidden" alt="Event cover preview" />
+                </div>
+
+                <div class="image-actions">
+                    <label for="imageUpload" class="btn btn--outline" style="cursor:pointer">Upload Image</label>
+                    <input id="imageUpload" type="file" accept="image/*" class="hidden" style="display:none" />
+                    <button id="removeImage" class="btn btn--outline">Remove</button>
+                </div>
+
+                <div class="theme-select">
+                    <div style="font-weight:600">Theme</div>
+                    <select id="themeSelect" aria-label="Select theme">
+                        <option value="minimal">Minimal</option>
+                        <option value="dark">Dark</option>
+                        <option value="vibrant">Vibrant</option>
+                        <option value="classic">Classic</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- RIGHT: Form -->
+            <div>
+                <div class="card form">
+                    <div>
+                        <label for="title">Event Name</label>
+                        <input id="title" type="text" placeholder="Event Name" />
+                    </div>
+
+                    <div>
+                        <label for="description">Add Description</label>
+                        <textarea id="description" placeholder="Describe your event..."></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="location">Add Event Location</label>
+                            <input id="location" type="text" placeholder="Offline location or virtual link" />
+                        </div>
+                        <div class="col control small">
+                            <div style="font-weight:700;margin-bottom:6px">Timezone</div>
+                            <div class="small" id="tzLabel">GMT+01:00 — Local</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="start">Start</label>
+                            <input id="start" type="datetime-local" />
+                        </div>
+                        <div class="col">
+                            <label for="end">End</label>
+                            <input id="end" type="datetime-local" />
+                        </div>
+                    </div>
+
+                    <!-- Tickets & options -->
+                    <div style="margin-top:6px">
+                        <div style="font-weight:700;margin-bottom:6px">Event Options</div>
+                        <div class="options control">
+                            <div style="display:flex;justify-content:space-between;align-items:center">
+                                <div>
+                                    <div style="font-weight:700">Tickets</div>
+                                    <div class="small">Free or paid tickets</div>
+                                </div>
+                                <div style="display:flex;gap:8px;align-items:center">
+                                    <label class="switch" title="Free / Paid">
+                                        <div id="ticketToggle" class="toggle" role="switch" aria-checked="false">
+                                            <div class="dot"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div id="priceRow" style="margin-top:8px;display:none">
+                                <label for="price">Price (USD)</label>
+                                <input id="price" type="number" min="0" placeholder="Amount in USD" />
+                            </div>
+
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+                                <div>
+                                    <div style="font-weight:700">Require Approval</div>
+                                    <div class="small">Manually approve bookings</div>
+                                </div>
+                                <label class="switch" title="Require approval">
+                                    <div id="approvalToggle" class="toggle" role="switch" aria-checked="false">
+                                        <div class="dot"></div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+                                <div style="flex:1">
+                                    <label for="capacity">Capacity</label>
+                                    <input id="capacity" type="number" min="1" placeholder="e.g., 100" />
+                                </div>
+                                <div style="width:140px;display:flex;align-items:center;gap:8px">
+                                    <input id="unlimited" type="checkbox" />
+                                    <label for="unlimited" class="small">Unlimited</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="footer-actions">
+                        <button id="createEvent" class="create-btn">Create Event</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- toast container -->
+    <div id="toastWrap" aria-live="polite"></div>
+
+
+</body>
+
+</html>

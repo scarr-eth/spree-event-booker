@@ -1,0 +1,316 @@
+        :root {
+            --bg: #071428;
+            --panel: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            --muted: #9fb0c9;
+            --accent-start: #7b61ff;
+            --accent-end: #2bb8ff;
+            --card: #0d1b2a;
+            --radius: 12px;
+            --glass: rgba(255, 255, 255, 0.03);
+            --text: #eaf2ff;
+            --shadow: 0 12px 30px rgba(2, 6, 23, 0.6);
+            --maxw: 1200px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+            background:
+                radial-gradient(800px 500px at 10% 10%, rgba(123, 97, 255, 0.04), transparent),
+                var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Header (same style as index) */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(6, 10, 20, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            z-index: 1000;
+            padding: 14px 0;
+            backdrop-filter: blur(6px);
+        }
+
+        .site-header__inner {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--muted);
+            text-decoration: none
+        }
+
+        .brand__logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-weight: 800
+        }
+
+        .brand__name {
+            font-weight: 700;
+            color: #fff
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 22px;
+            margin: auto;
+            justify-content: center
+        }
+
+        .main-nav a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 600
+        }
+
+        .auth-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700
+        }
+
+        .btn--outline {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--muted);
+            background: transparent
+        }
+
+        .btn--primary {
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            color: #fff;
+            border: 0
+        }
+
+        main {
+            max-width: var(--maxw);
+            width: 100%;
+            padding: 50px 24px 60px;
+        }
+
+        /* layout */
+        .grid {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        /* left card: image + theme */
+        .card {
+            background: var(--panel);
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            box-shadow: var(--shadow);
+        }
+
+        .image-uploader {
+            background: #fff;
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 260px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-uploader img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block
+        }
+
+        .image-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            align-items: center
+        }
+
+        .theme-select {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px
+        }
+
+        select {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 10px;
+            border-radius: 8px;
+            color: var(--text)
+        }
+
+        /* right column: form */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block
+        }
+
+        input[type="text"],
+        input[type="datetime-local"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: transparent;
+            color: var(--text);
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical
+        }
+
+        .row {
+            display: flex;
+            gap: 12px
+        }
+
+        .row .col {
+            flex: 1
+        }
+
+        .small {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .control {
+            background: var(--card);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.02)
+        }
+
+        /* tickets and options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px
+        }
+
+        .switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer
+        }
+
+        .toggle {
+            width: 46px;
+            height: 26px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.06);
+            position: relative;
+            padding: 3px;
+            transition: background .18s
+        }
+
+        .toggle .dot {
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            transition: left .18s
+        }
+
+        .toggle.on {
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end))
+        }
+
+        .toggle.on .dot {
+            left: 24px
+        }
+
+        .footer-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 18px
+        }
+
+        .create-btn {
+            background: #fff;
+            color: #2b163a;
+            padding: 14px 26px;
+            border-radius: 12px;
+            font-weight: 700;
+            border: 0;
+            min-width: 260px
+        }
+
+        /* toast */
+        .toast {
+            position: fixed;
+            right: 18px;
+            top: 18px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: #111;
+            color: #fff;
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5)
+        }
+
+        /* responsive */
+        @media (max-width:980px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 18px
+            }
+
+            .image-uploader {
+                min-height: 180px
+            }
+        }

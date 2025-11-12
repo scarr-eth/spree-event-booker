@@ -621,3 +621,8 @@
             outline: 2px solid rgba(123, 97, 255, 0.12);
             outline-offset: 4px
         }
+
+        #categoryFilter {
+            min-width: 120px;
+            background-color: #050816;
+        }

@@ -8,6 +8,21 @@
     <link rel="shortcut icon" href="assets/icon.png" type="image/x-icon">
     <style>
         :root {
+            --font-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-base);
+            font-weight: 400;
+            letter-spacing: 0.2px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: #eaf2ff;
+            background-color: #051023;
+        }
+
+        :root {
             --bg: #051023;
             --card: #071428;
             --accent: #7b61ff;
@@ -94,7 +109,31 @@
         .error {
             color: #ff6b6b;
             font-size: 13px;
+
             margin-bottom: 8px
+        }
+
+        .back-home-btn {
+            display: block;
+            width: fit-content;
+            margin: 18px auto 0;
+            /* center it under the paragraph */
+            text-align: center;
+            background: transparent;
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 8px 20px;
+            transition: all 0.1s ease;
+        }
+
+        .back-home-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(123, 97, 255, 0.3);
         }
     </style>
 </head>
@@ -102,7 +141,7 @@
 <body>
     <main class="card" role="main">
         <h2>Create an account</h2>
-        <p class="small">Sign up to book events and manage your bookings. (Demo only — client-side auth)</p>
+        <p class="small">Sign up to book events and manage your bookings. <!--Demo only — client-side auth--> </p>
 
         <div id="err" class="error" style="display:none"></div>
 
@@ -124,6 +163,7 @@
 
         <a class="link" href="login.html">Already have an account? Log in</a>
         <p class="help">Signed up users are stored in browser storage for demo only.</p>
+        <a href="index.html" class="back-home-btn">← Back to Home</a>
     </main>
 
     <script>
